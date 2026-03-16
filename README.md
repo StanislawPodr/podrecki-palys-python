@@ -1,2 +1,2 @@
 # podrecki-palys-python
-Python lab projects
+Python lab projects for PWr
