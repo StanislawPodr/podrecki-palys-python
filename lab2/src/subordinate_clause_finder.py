@@ -22,7 +22,7 @@ def get_fst_with_subordinates(input=sys.stdin, subordinate_number=SUBORDINATE_NU
         try:
             sentence = get_sentence(input)
             if subordinate_counter(sentence) >= subordinate_number:
-                return sentence + '.'
+                return sentence + '\n'
         except EOFError:
             break
     return None

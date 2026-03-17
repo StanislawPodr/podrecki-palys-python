@@ -34,7 +34,7 @@ def print_sentences(input=sys.stdin, output=sys.stdout, contains=CONTAINS, max_n
             sentence = get_sentence(input)
             no_contained = how_many_sentence_contain(sentence.lower(), contains)
             if no_contained >= max_no:
-                print(sentence + '.', file=output, end='')
+                print(sentence + '\n', file=output, end='')
         except EOFError:
             break
     print()

@@ -35,9 +35,9 @@ def get_sentence(input=sys.stdin):
                 sentence += " "  # zdanie dalej w nowej lini
         else:
             is_last_nl = False
-            sentence += c
             if c in ".!?:":
                 return sentence.strip()
+            sentence += c
 
 def get_word(stream):
     c = stream.read(1)
