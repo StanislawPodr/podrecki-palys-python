@@ -1,5 +1,5 @@
 import sys
-
+sys.stdin.reconfigure(encoding='utf-8') #polskie znaki
 def paragraph_count(stream=sys.stdin):
     count = 0
     is_paragraph_new = True

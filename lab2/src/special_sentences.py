@@ -1,6 +1,7 @@
 import sys
 from helper import get_sentence
 sys.stdin.reconfigure(encoding='utf-8') #polskie znaki
+sys.stdout.reconfigure(encoding='utf-8')
 
 def is_question_or_exclamation(sentence):
     last = ""

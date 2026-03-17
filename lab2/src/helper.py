@@ -2,14 +2,14 @@ import sys
 
 def get_line(input=sys.stdin):
     line = ''
-    c = input.read(1) 
-    
+    c = input.read(1)
+
     while c != '\n':
         line += c
         c = input.read(1)
         if not c:
             raise EOFError
-    
+
     return line
 
 def get_sentence(input=sys.stdin):
@@ -25,14 +25,14 @@ def get_sentence(input=sys.stdin):
             raise EOFError
 
         if c == "\n":
-            if is_last_nl:  #nowy akapit - zwroc zdanie jesli jest
+            if is_last_nl:  # nowy akapit - zwroc zdanie jesli jest
                 if sentence.strip():
                     return sentence.strip()
                 is_last_nl = False
                 sentence = ""
             else:
                 is_last_nl = True
-                sentence += " " #zdanie dalej w nowej lini
+                sentence += " "  # zdanie dalej w nowej lini
         else:
             is_last_nl = False
             sentence += c
@@ -41,7 +41,7 @@ def get_sentence(input=sys.stdin):
 
 def get_word(stream):
     c = stream.read(1)
-    while c and not c.isalpha(): #dopoki nie litera - kolejny znak
+    while c and not c.isalpha():  # dopoki nie litera - kolejny znak
         c = stream.read(1)
     if not c:
         raise EOFError

@@ -1,6 +1,7 @@
 import sys
 import io
 sys.stdin.reconfigure(encoding='utf-8') #polskie znaki
+sys.stdout.reconfigure(encoding='utf-8')
 from helper import get_sentence, get_word
 
 
@@ -15,7 +16,7 @@ def count_words(sentence):
         return count
 
 
-def sentences_under5(stream=sys.stdin):
+def sentences_under5(stream):
     try:
         while True:
             sentence = get_sentence(stream)
@@ -26,5 +27,5 @@ def sentences_under5(stream=sys.stdin):
 
 
 if __name__ == "__main__":
-    for sentence in sentences_under5():
+    for sentence in sentences_under5(sys.stdin):
         print(sentence)

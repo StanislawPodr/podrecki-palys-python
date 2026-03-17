@@ -1,5 +1,6 @@
 import sys
 sys.stdin.reconfigure(encoding='utf-8') #polskie znaki
+sys.stdout.reconfigure(encoding='utf-8')
 from helper import get_sentence
 
 
