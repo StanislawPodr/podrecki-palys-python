@@ -51,7 +51,7 @@ def print_book_fixed(input=sys.stdin, output=sys.stdout):
 
         # wypisanie wszystkich linii z usunięciem spacji i znaków białych z przodu i z tyłu
         while True:
-            print(remove_additional_spaces(line), file=output)
+            print(remove_additional_spaces(line), file=output) 
             line = get_line(input).strip()
     except EOFError: 
         return    
