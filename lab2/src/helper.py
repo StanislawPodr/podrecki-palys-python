@@ -38,3 +38,16 @@ def get_sentence(input=sys.stdin):
             sentence += c
             if c in ".!?:":
                 return sentence.strip()
+
+def get_word(stream):
+    c = stream.read(1)
+    while c and not c.isalpha(): #dopoki nie litera - kolejny znak
+        c = stream.read(1)
+    if not c:
+        raise EOFError
+
+    word = ""
+    while c and c.isalpha():
+        word += c
+        c = stream.read(1)
+    return word
