@@ -1,6 +1,8 @@
 import sys
 from helper import get_line
 
+ENDING = '-----'
+
 sys.stdin.reconfigure(encoding='utf-8')
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -28,6 +30,7 @@ def skip_book_preamble(stream=sys.stdin, max_header_lines=MAX_HEADER_LINES,
                 last_empty_lines += 1
             prev_was_new_line = True
         else:
+            last_empty_lines = 0
             prev_was_new_line = False
             last_empty_lines=0  #reset licznika kolejnych pustych wierszy
         c = stream.read(1)
@@ -36,14 +39,14 @@ def remove_additional_spaces(line):
     output = ''
     prev_was_space = False
     for chr in line:
-        curr_is_space = (chr == ' ')
+        curr_is_space = chr.isspace()
         if not curr_is_space or not prev_was_space:
             output += chr
         prev_was_space = curr_is_space
     return output
 
 
-def print_book_fixed(input=sys.stdin, output=sys.stdout):
+def print_book_fixed(input=sys.stdin, output=sys.stdout, ending=ENDING):
     try:
         # Usuwanie pustych linii z przodu
         line = get_line(input).strip()
@@ -51,7 +54,7 @@ def print_book_fixed(input=sys.stdin, output=sys.stdout):
             line = get_line(input).strip()
 
         # wypisanie wszystkich linii z usunięciem spacji i znaków białych z przodu i z tyłu
-        while True:
+        while line != ending:
             print(remove_additional_spaces(line), file=output) 
             line = get_line(input).strip()
             if(line.strip() == "-----"):    #usuniecie wydania
