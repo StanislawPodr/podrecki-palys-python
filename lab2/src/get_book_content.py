@@ -29,6 +29,7 @@ def skip_book_preamble(stream=sys.stdin, max_header_lines=MAX_HEADER_LINES,
             prev_was_new_line = True
         else:
             prev_was_new_line = False
+            last_empty_lines=0  #reset licznika kolejnych pustych wierszy
         c = stream.read(1)
 
 def remove_additional_spaces(line):
@@ -53,6 +54,8 @@ def print_book_fixed(input=sys.stdin, output=sys.stdout):
         while True:
             print(remove_additional_spaces(line), file=output) 
             line = get_line(input).strip()
+            if(line.strip() == "-----"):    #usuniecie wydania
+                return
     except EOFError: 
         return    
 
