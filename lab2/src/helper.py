@@ -66,3 +66,31 @@ def get_next_word(iterator):
         return word
 
     return word
+
+def get_sentence2(input=sys.stdin):
+    sentence = ""
+    is_last_nl = False
+
+    while True:
+        c = input.read(1)
+
+        if not c:
+            if sentence.strip():
+                return sentence.strip()
+            raise EOFError
+
+        if c == "\n":
+            if is_last_nl:  # nowy akapit - zwroc zdanie jesli jest
+                if sentence.strip():
+                    return sentence.strip()
+                is_last_nl = False
+                sentence = ""
+            else:
+                is_last_nl = True
+                sentence += " "  # zdanie dalej w nowej lini
+        else:
+            is_last_nl = False
+            if c in ".!?:":
+                sentence += c
+                return sentence.strip()
+            sentence += c

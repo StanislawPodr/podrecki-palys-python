@@ -1,6 +1,9 @@
 import sys
 from helper import get_sentence
 
+sys.stdin.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding='utf-8')
+
 # Limit zdań podrzędnych w zdaniu
 SUBORDINATE_NUMBER = 2
 

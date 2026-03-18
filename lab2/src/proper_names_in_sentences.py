@@ -1,6 +1,9 @@
 import sys
 from helper import get_sentence
 
+sys.stdin.reconfigure(encoding='utf-8') #polskie znaki
+sys.stdout.reconfigure(encoding='utf-8')
+
 def has_proper_name(sentence):
     chrIdx = 0
     # pomijamy pierwszy wyraz

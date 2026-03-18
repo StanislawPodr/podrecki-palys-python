@@ -1,6 +1,9 @@
 import sys
 from helper import get_sentence, get_next_word
 
+sys.stdin.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding='utf-8')
+
 # String ze słowami które powinny zawierać zdania
 CONTAINS = 'i oraz ale że lub'
 # Liczba wyrazów z powyższej listy kwalifikująca do zaliczenia zdania

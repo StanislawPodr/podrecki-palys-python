@@ -1,5 +1,5 @@
 import sys
-from helper import get_sentence
+from helper import get_sentence2
 sys.stdin.reconfigure(encoding='utf-8') #polskie znaki
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -14,7 +14,7 @@ def is_question_or_exclamation(sentence):
 def special_sentences(stream=sys.stdin):
     try:
         while True:
-            sentence = get_sentence(stream)
+            sentence = get_sentence2(stream)
             if is_question_or_exclamation(sentence):
                 yield sentence
     except EOFError:
