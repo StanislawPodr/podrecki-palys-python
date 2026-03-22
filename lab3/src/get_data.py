@@ -53,17 +53,23 @@ class Indexes(Enum):
 def get_data_tuple(line):
     data = line.split('\t')
     return (
-        datetime.fromtimestamp(int(data[__AllIndexes.TS])),
-        data[__AllIndexes.UID],
-        data[__AllIndexes.ID_ORIG_H],
-        int(data[__AllIndexes.ID_ORIG_P]),
-        data[__AllIndexes.ID_RESP_H],
-        int(data[__AllIndexes.ID_RESP_P]),
-        data[__AllIndexes.METHOD],
-        data[__AllIndexes.HOST],
-        data[__AllIndexes.URI],
-        int(data[__AllIndexes.STATUS_CODE])
-    )
+        datetime.fromtimestamp(float(data[__AllIndexes.TS.value])),
+        data[__AllIndexes.UID.value],
+        data[__AllIndexes.ID_ORIG_H.value],
+        int(data[__AllIndexes.ID_ORIG_P.value]),
+        data[__AllIndexes.ID_RESP_H.value],
+        int(data[__AllIndexes.ID_RESP_P.value]),
+        data[__AllIndexes.METHOD.value],
+        data[__AllIndexes.HOST.value],
+        data[__AllIndexes.URI.value],
+        correct_int(data[__AllIndexes.STATUS_CODE.value])
+    )#Dodałem .value bo cos nie dzialalo
+
+def correct_int(value):
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return None
 
 def entry_to_dict(enter):
     ts, uid, id_orig_h, id_orig_p, id_resp_h, id_resp_p, method, host, uri, status_code = enter
@@ -83,7 +89,7 @@ def entry_to_dict(enter):
 def validate_data_tuple(data):
     for info in data:
         if info in '-':
-            raise ValueError('The value is not set')
+          raise ValueError('The value is not set')
     return data
 
 def convert_data_dict(data_dict):
@@ -104,10 +110,11 @@ def read_log():
         try:
             line = input().strip()
             if line:
-                data_tuple = validate_data_tuple(get_data_tuple(line))
+                data_tuple = get_data_tuple(line)   #bez validate bo na razie nie dzialalo
                 list_of_tuples.append(data_tuple)
         except EOFError:
             break
-        except:
-            pass # Skipujemy wybrakowane rekordy 
+        except Exception as e:
+            import sys
+            print(f"BŁĄD: {e}", file=sys.stderr)
     return list_of_tuples

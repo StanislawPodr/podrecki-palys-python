@@ -4,7 +4,7 @@ def get_failed_reads(log, merge=False):
     status_400 = []
     status_500 = []
     for data in log:
-        status_code = data[Indexes.STATUS_CODE] 
+        status_code = data[Indexes.STATUS_CODE.value]
         if 400 <= status_code < 500:
             status_400.append(data)
         elif 500 <= status_code < 600:
