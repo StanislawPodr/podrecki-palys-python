@@ -1,3 +1,4 @@
+from get_data import log_to_dict
 
 
 def get_session_path(logs):

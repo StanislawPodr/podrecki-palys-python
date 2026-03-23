@@ -4,8 +4,8 @@ import re
 
 
 def get_extension_stats(logs):
-    file_extension_regex = re.compile('.*\.(\w)$')
-    uri_list = [log[Indexes.URI] for log in logs]
+    file_extension_regex = re.compile(r'/\w+\.(\w+)($|\?)')
+    uri_list = [log[Indexes.URI.value] for log in logs]
     extension_list = []
     for uri in uri_list:
         extension_got = re.search(file_extension_regex, uri)

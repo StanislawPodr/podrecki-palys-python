@@ -19,7 +19,7 @@ def print_dict_entry_dates(log_dict):
         print(f'Method usage proportion: {methods_usage_proportion}')
         # Stosunek liczby kodów 200
         add_200_code = lambda acc, code: acc + 1 if 200 <= code < 300 else acc
-        code_list = [request['status_code'] for request in session]
+        code_list = [request['status_code'] for request in session if request['status_code'] != None]
         no_200_codes = reduce(add_200_code, code_list, 0)
-        print(f'Proportion of 200 codes: {no_200_codes / len(code_list)}')
+        print(f'Proportion of 200 codes: {no_200_codes / len(session)}')
         print()

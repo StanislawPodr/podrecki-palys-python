@@ -71,37 +71,11 @@ def correct_int(value):
     except (ValueError, TypeError):
         return None
 
-def entry_to_dict(enter):
-    ts, uid, id_orig_h, id_orig_p, id_resp_h, id_resp_p, method, host, uri, status_code = enter
-    return {
-        'ts': ts,
-        'uid': uid,
-        'id.orig_h': id_orig_h,
-        'id.orig_p': id_orig_p,
-        'id.resp_h': id_resp_h,
-        'id.resp_p': id_resp_p,
-        'method': method,
-        'host': host,
-        'uri': uri,
-        'status_code': status_code
-    }
-
 def validate_data_tuple(data):
     for info in data:
         if info in '-':
           raise ValueError('The value is not set')
     return data
-
-def convert_data_dict(data_dict):
-    # Istniejące dane, które można konwertować powinny zostać przekonwertowane
-    # TODO może się kiedyś przydać i dodać do returna w get_data_dict
-    pass
-
-
-def get_data_dict(line):
-    # Dane są separowane tabulatorem, "-" oznacza brak wartości, więc nie bierzemy go do słownika
-    data = zip(LOG_KEYS, line.split('\t'))
-    return {k: v for (k, v) in data if not v in '-'}
 
 # Zwraca listę tupleów z danymi z stdin
 def read_log():
@@ -118,3 +92,27 @@ def read_log():
             import sys
             print(f"BŁĄD: {e}", file=sys.stderr)
     return list_of_tuples
+
+from collections import defaultdict
+
+def entry_to_dict(entry):
+    ts, uid, id_orig_h, id_orig_p, id_resp_h, id_resp_p, method, host, uri, status_code = entry
+    return {
+        'ts': ts,
+        'uid': uid,
+        'id.orig_h': id_orig_h,
+        'id.orig_p': id_orig_p,
+        'id.resp_h': id_resp_h,
+        'id.resp_p': id_resp_p,
+        'method': method,
+        'host': host,
+        'uri': uri,
+        'status_code': status_code,
+    }
+
+def log_to_dict(log):
+    result = defaultdict(list)
+    for entry in log:
+        uid = entry[Indexes.UID.value]
+        result[uid].append(entry_to_dict(entry))
+    return dict(result)
