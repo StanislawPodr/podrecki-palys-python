@@ -16,9 +16,3 @@ def entry_to_dict(entry):
         'status_code': status_code,
     }
 
-def log_to_dict(log):
-    result = defaultdict(list)
-    for entry in log:
-        uid = entry[Indexes.UID.value]
-        result[uid].append(entry_to_dict(entry))
-    return dict(result)

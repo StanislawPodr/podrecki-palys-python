@@ -13,9 +13,16 @@ def get_top_uris(log, n=10):
     return counts.most_common(n)
 
 def get_failed_reads(log):
-    errors_4xx = [e for e in log if 400 <= e[Indexes.STATUS_CODE.value] < 500]
-    errors_5xx = [e for e in log if 500 <= e[Indexes.STATUS_CODE.value] < 600]
-
+    errors_4xx = []
+    errors_5xx = []
+    for e in log:
+        code = e[Indexes.STATUS_CODE.value]
+        if code is None:
+            continue
+        if 400 <= code < 500:
+            errors_4xx.append(e)
+        elif 500 <= code < 600:
+            errors_5xx.append(e)
     return errors_4xx, errors_5xx
 
 
