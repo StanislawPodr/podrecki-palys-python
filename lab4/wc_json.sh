@@ -13,7 +13,7 @@ if [[ -f $fileName ]]; then
     uniq -c |
     sort -n |
     tail -1 |
-    awk '{print $1}'
+    awk '{print $2}'
     )
 
     mostUsedWord=$(tr -cs '[:alnum:]' '\n' < "${fileName}" |
@@ -22,11 +22,11 @@ if [[ -f $fileName ]]; then
     uniq -c |
     sort -n |
     tail -1 |
-    awk '{print $1}'
+    awk '{print $2}'
     )
 
     echo "{
-    \"file\":\"${fileName}\"
+    \"file\":\"${fileName}\",
     \"noChars\":\"${noChars}\",
     \"noWords\":\"${noWords}\",
     \"noLines\":\"${noLines}\",
@@ -34,3 +34,7 @@ if [[ -f $fileName ]]; then
     \"mostUsedWord\":\"${mostUsedWord}\"
 }"
 fi
+
+ #Nie bylo przecinkaw lini 29,
+ #Most used char i word wypisywaly nuemr, a nie wartosc
+ # awk {print $1] -> awk {print $2]
