@@ -106,3 +106,48 @@ def remove_diacritics_and_spaces_in_station_names(csv_data):
             station_name = _with_spaces_to_snake(_remove_diacritics(station_name))
             result[key] = station_name
     return result
+
+#e. Zweryfikuj, czy wszystkie stacje, których kod kończy się na „MOB” mają rodzaj stacji określony jako ‘mobilna’.
+def verify_mob_stations(csv_data: Iterable) -> dict[str, bool]:
+    _mob_code_re = re.compile(r"MOB$")
+
+    stations_data = get_station_data(csv_data)
+    result = {}
+    for station_id, vals in stations_data.items():
+        if re.search(_mob_code_re, station_id):
+            rodzaj = vals.get("Rodzaj stacji", "")
+            result[station_id] = rodzaj.strip().lower() == "mobilna"
+    return result
+
+
+#f. Wyodrębnij lokalizacje złożone z 3 członów rozdzielonych myślnikiem.
+def get_three_part_locations(csv_data: Iterable) -> list[tuple[str, str, str, str]]:
+    _three_part_dash_re = re.compile(r"^(?P<part1>[^-]+?) - (?P<part2>[^-]+?) - (?P<part3>[^-]+)$")
+
+    stations_data = get_station_data(csv_data)
+    result = []
+    for station_id, vals in stations_data.items():
+        name = vals.get("Nazwa stacji", "")
+        match = re.match(_three_part_dash_re, name)
+        if match:
+            result.append(
+                (
+                    station_id,
+                    match.group("part1"),
+                    match.group("part2"),
+                    match.group("part3"),
+                )
+            )
+    return result
+
+#g. Znajdź lokalizacje zawierające przecinek i nazwę ulicy (ul.) lub alei (al.)
+def get_locations_with_comma_and_street(csv_data: Iterable) -> list[tuple[str, str]]:
+    _street_with_comma_re = re.compile(r"(?:ul\.|al\.)[^,]*,|,[^,]*(?:ul\.|al\.)", re.IGNORECASE)
+
+    stations_data = get_station_data(csv_data)
+    result = []
+    for station_id, vals in stations_data.items():
+        address = vals.get("Adres", "")
+        if address and re.search(_street_with_comma_re, address):
+            result.append((station_id, address))
+    return result
