@@ -1,3 +1,4 @@
+from functools import lru_cache
 import itertools
 
 def make_generator(fun):
@@ -14,6 +15,13 @@ def fib(num):
         fst = sec
         sec = nxt
     return fst
+
+
+#przy funkcjach rekurencyjnych trzeba uzyc "@lru_cache(maxsize=None)"
+def make_generator_mem(f):
+    if not hasattr(f, "cache_info"):
+        f = lru_cache(maxsize=None)(f)
+    return make_generator(f)
 
 if __name__ == "__main__":
     test_fib = make_generator(fib)

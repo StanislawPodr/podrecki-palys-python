@@ -1,7 +1,12 @@
 from collections import defaultdict
+from functools import reduce
 import itertools
 
+#1a
+def acronym(words):
+    return reduce(lambda acc, w: acc + w[0].upper(), words, "")
 
+#1b
 # Przekomplikowany algorytm szukania mediany. Nie działa dla [], ale nie ma ifów
 def median(numbers_list: list):
     numbers_sorted = sorted(numbers_list)
@@ -9,6 +14,14 @@ def median(numbers_list: list):
     mid_fst = mid_sec - (len(numbers_sorted) + 1) % 2
     return (numbers_sorted[mid_fst] + numbers_sorted[mid_sec]) / 2
 
+#1c
+def flatten(lst):
+    def flatten_element(element):
+        # Operator ternarny: jeśli element jest listą lub krotką – rekurencja
+        return flatten(list(element)) if isinstance(element, (list, tuple)) else [element]
+ 
+    return reduce(lambda acc, el: acc + flatten_element(el), lst, [])
+#1d
 def make_alpha_dict(alpha: str):
     alpha_list_sorted = sorted(alpha.split())
     grouped_by_fst_letter = itertools.groupby(alpha_list_sorted, lambda word: word[:1])
