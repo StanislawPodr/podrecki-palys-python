@@ -17,16 +17,24 @@ def median(numbers_list: list):
 #1c
 def flatten(lst):
     def flatten_element(element):
-        # Operator ternarny: jeśli element jest listą lub krotką – rekurencja
         return flatten(list(element)) if isinstance(element, (list, tuple)) else [element]
- 
     return reduce(lambda acc, el: acc + flatten_element(el), lst, [])
+    
 #1d
 def make_alpha_dict(alpha: str):
     alpha_list_sorted = sorted(alpha.split())
     grouped_by_fst_letter = itertools.groupby(alpha_list_sorted, lambda word: word[:1])
     return {key: list(iterator) for key, iterator in grouped_by_fst_letter}
-
+    
+#1e
+def newtons_sqrt(x, epsilon=0.1):
+    def next_itr(y):
+        return (y + x / y) / 2
+    def check_eps(y):
+        return y if abs(y * y - x) < epsilon else check_eps(next_itr(y))
+ 
+    return check_eps(x / 2)
+#1f
 # Trochę słabo z tym funkcyjnym podejściem jak nie ma niemutowalnych struktur danych
 def group_anagrams(word_list: list[str]):
     anagrams = defaultdict(list)
